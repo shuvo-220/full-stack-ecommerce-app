@@ -20,6 +20,22 @@ exports.updateProduct = async(req, res)=>{
     res.status(200).json(product);
 }
 
+exports.getAllProducts = async(req, res)=>{
+    const products = await Product.find({});
+    if(!products){
+        res.status(500).json('Product not found');
+    }
+    res.status(200).json(products);
+}
+
+exports.productDetails = async(req, res)=>{
+    const product = await Product.findById(req.params.id);
+    if(!product){
+        res.status(500).json('Product not found');
+    }
+    res.status(200).json(product);
+}
+
 exports.deleteProduct = async(req, res)=>{
     const product = await Product.findByIdAndDelete(req.params.id);
     if(!product){
