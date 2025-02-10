@@ -1,25 +1,24 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
-exports.auth = async(req, res, next)=>{
+exports.auth=async(req, res, next)=>{
     const {token} = req.cookies;
+    
     if(!token){
-        res.status(400).json('token not found');
+        res.status(401).json('please login to access this resource');
     }
-    try {
-        const decode = jwt.verify(token, process.env.SECRET_KEY);
-        let user = await User.findById(decode.id)
-        req.user = user;
-        next();
-    } catch (error) {
-        res.status(400).json(error.message);
-    }
+
+    const decodedData = jwt.verify(token, process.env.SECRET_KEY);
+
+    req.user = await User.findById(decodedData.id);
+    next();
 }
 
+
 exports.roles=(...roles)=>{
-    return(req,res,next)=>{
+    return (req, res, next)=>{
         if(!roles.includes(req.user.role)){
-            res.status(400).json(`${req.user.role} is not allowed to access`)
+            res.status(400).json(`role ${req.user.role} is not allowed to access this resource`);
         }
         next();
     }
