@@ -5,9 +5,10 @@ const jwt = require('jsonwebtoken');
 //register
 exports.register = async(req, res)=>{
     const{name,email,password} = req.body;
+    const image = req.file ? req.file.filename : null;
     try {
         const user = await User.create({
-            name,email,password
+            name,email,password,image
         })
         res.status(200).json(user)
     } catch (error) {
