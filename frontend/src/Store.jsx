@@ -2,17 +2,19 @@ import { createContext, useReducer } from "react";
 
 
 const initialState={
-    user:{
-        
-    }
+    user:localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
 }
 
-const reducer=()=>{
+const reducer=(state, action)=>{
     switch(action.type){
         case 'LOGIN':
             return{
                 ...state,
                 user:action.payload
+            }
+        case 'LOGOUT':
+            return{
+                user:null
             }
         default:
             return state;
@@ -20,13 +22,15 @@ const reducer=()=>{
 }
 
 
-export const store = createContext();
+export const Store = createContext();
 
 
-export const storeProvider = ({children}) =>{
+const StoreProvider = ({children}) =>{
     const[state, dispatch] = useReducer(reducer, initialState);
     const value = {state, dispatch}
-    return <store.Provider value={value}>
-        {children}
-    </store.Provider>
+    return <Store.Provider value={value}>
+       {children}
+    </Store.Provider>
 }
+
+export default StoreProvider;
