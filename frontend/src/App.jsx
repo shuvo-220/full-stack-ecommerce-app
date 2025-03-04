@@ -7,6 +7,8 @@ import Cart from './components/cart/Cart';
 import Signup from './components/signup/Signup';
 import Profile from './components/profile/Profile';
 import Order from './components/order/Order';
+// import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
+// import PublicRotue from './components/protectedRoute/PublicRotue';
 
 function App() {
 
@@ -20,8 +22,14 @@ function App() {
             <Route path='/cart' element={<Cart />} />
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/order' element={<Order />} />
+            <Route path='/profile' element={
+             
+                <Profile />
+            
+            } />
+            <Route path='/order' element={
+              <Order />
+              } />
           </Routes>
         </BrowserRouter>
       </div>

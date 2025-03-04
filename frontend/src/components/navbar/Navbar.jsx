@@ -1,23 +1,28 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Store } from '../../Store';
 
 const Navbar = () => {
 
-    const{state, dispatch} = useContext(Store)
-    const{user} = state;
+    const[open, setOpen] = useState('');
 
-    const[open, setOpen] = useState(false)
+    const{state, dispatch} = useContext(Store);
+    const{user} = state;
 
     const navigate = useNavigate();
 
     const handleLogout=()=>{
         dispatch({type:'LOGOUT'})
-        localStorage.removeItem('user');
+        localStorage.removeItem('user')
         setOpen(false)
-        navigate('/login');
     }
+
+    useEffect(()=>{
+        if(!user){
+            navigate('/login')
+        }
+    },[user, navigate])
 
     return (
         <>
@@ -34,12 +39,12 @@ const Navbar = () => {
                     <div>
                         {
                             user ? <div className='relative'>
+                               
                                 <img onClick={()=>setOpen(!open)} className='cursor-pointer w-10 h-10 rounded-full' src={`http://localhost:5000/uploads/${user.user.image}`} />
                                
                             </div> :
                             <Link to='/login'>Login</Link>
-                        }
-
+                         } 
                         
                     </div>
                 </div>
