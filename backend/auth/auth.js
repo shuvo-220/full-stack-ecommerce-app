@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 
 exports.auth = async (req, res, next) => {
  
-  const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
+  const token = req.cookies.token;
     console.log(token)
   if (!token) {
     return res.status(401).json('Please login to access this resource');
@@ -12,11 +12,6 @@ exports.auth = async (req, res, next) => {
   try {
     const decodedData = jwt.verify(token, process.env.SECRET_KEY);
     req.user = await User.findById(decodedData.id); 
-
-    if (!req.user) {
-      return res.status(401).json('User not found');
-    }
-
     next();
   } catch (error) {
     console.log(error);
