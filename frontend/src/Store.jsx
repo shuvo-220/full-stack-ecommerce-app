@@ -5,6 +5,7 @@ export const Store = createContext();
 
 const initialState = {
     user : localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
+    token : localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null,
 }
 
 const reducer = (state, action)=>{

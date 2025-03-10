@@ -5,7 +5,7 @@ import { Store } from '../../Store';
 
 const Navbar = () => {
 
-    const[open, setOpen] = useState('');
+    const[open, setOpen] = useState(false);
 
     const{state, dispatch} = useContext(Store);
     const{user} = state;
@@ -15,6 +15,7 @@ const Navbar = () => {
     const handleLogout=()=>{
         dispatch({type:'LOGOUT'})
         localStorage.removeItem('user')
+        localStorage.removeItem('token')
         setOpen(false)
     }
 
@@ -40,7 +41,7 @@ const Navbar = () => {
                         {
                             user ? <div className='relative'>
                                
-                                <img onClick={()=>setOpen(!open)} className='cursor-pointer w-10 h-10 rounded-full' src={`http://localhost:5000/uploads/${user.user.image}`} />
+                                <img onClick={()=>setOpen(!open)} className='cursor-pointer w-10 h-10 rounded-full' src={`http://localhost:5000/uploads/${user.image}`} />
                                
                             </div> :
                             <Link to='/login'>Login</Link>
