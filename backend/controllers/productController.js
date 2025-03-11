@@ -2,10 +2,10 @@ const Product = require('../models/productModel');
 
 exports.createProduct = async(req, res)=>{
     const{name,desc,price,category} = req.body;
-    const image = req.file.files;
+    // const image = req.file.files;
     try {
         const product = await Product.create({
-            name,desc,price,category,image
+            name,desc,price,category
         })
         res.status(200).json(product);
     } catch (error) {

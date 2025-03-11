@@ -28,8 +28,9 @@ const AddProduct = () => {
       const res = await axios.post('http://localhost:5000/api/v1/createProduct', productData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`
-        }
+          // 'Authorization': `Bearer ${token}`, 
+        },
+        withCredentials: true,
       })
       // if(res.status === 200){
       //   navigate('/allProduct')
